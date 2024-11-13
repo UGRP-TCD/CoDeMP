@@ -162,7 +162,7 @@ cython_debug/
 #.idea/
 
 # Downloaded pretrained models
-pt/
+models/
 
 # Setting folder
 .vscode/
