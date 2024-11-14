@@ -1,0 +1,32 @@
+from dataset import get_multi_images, get_single_image, normalize_image
+
+
+def run_by_option(option: int) -> None:
+    # Generate a description from a file (one by one)
+    if option == 1:
+        print("=> You selected option 1.\n")
+
+        """
+            [ Process the image file ]
+        """
+        # Load an image file
+        image = get_single_image()
+        # Normalize the image
+        norm_image = normalize_image(image)
+    # Generate series of descriptions from a folder
+    else:
+        print("=> You selected option 2.\n")
+
+        """
+            [ Process the image file ]
+        """
+        # Load images from a folder
+        images = get_multi_images()
+        # Normalize the images
+        norm_images = []
+        for image in images:
+            norm_images.append(normalize_image(image))
+
+
+def do_yolo_and_superpixel(image):
+    pass

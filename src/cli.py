@@ -13,6 +13,7 @@ def guide(version: str) -> int:
 --------------------------------------------------------------
 |  1. Generate a description from a file (one by one).       |
 |  2. Generate series of descriptions from a folder.         |
+|  3. Exit the program.                                      |
 --------------------------------------------------------------
 
 ** Note:
@@ -24,15 +25,13 @@ def guide(version: str) -> int:
 """)
 
     # Check an input validation
-    valid = ['1', '2']
+    valid = ['1', '2', '3']
 
     while True:
         option: int = input("Input an option: ")
 
         if option in valid:
-            break
+            return option
         else:
             print(
-                f"=> Invalid option: {option}. Please select a valid option(1 or 2).\n")
-
-    return option
+                f"=> Invalid option: {option}. Please select a valid option(1 / 2 / 3).\n")

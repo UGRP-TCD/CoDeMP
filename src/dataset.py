@@ -72,3 +72,67 @@ def normalize_image(image: np.ndarray) -> np.ndarray:
         image, (new_width, new_height), interpolation=cv2.INTER_LINEAR)
 
     return resized_image
+
+
+def get_single_image() -> np.ndarray:
+    """Prompts the user to input the name of an image file to load and returns the loaded image.
+
+    Returns:
+        np.ndarray: The loaded image as a numpy array.
+    """
+    while True:
+        file_name = input("Input the file name (<fileName>.<format>): ")
+
+        try:
+            image = load_single_image("data/using/" + file_name)
+            print("Image loaded successfully!")
+            return image
+        except FileNotFoundError as e:
+            print(
+                f"Error: {e}")
+            print("  a. Retry with a new file name")
+            print("  b. Exit the program")
+
+            while True:  # Invalid choice handling loop
+                user_choice = input(
+                    "Please select one of the following options (a / b): ").strip().lower()
+                if user_choice == "b":
+                    print("Exiting program...")
+                    return
+                elif user_choice == "a":
+                    print("Retrying...")
+                    break  # Exit the invalid choice loop and retry file input
+                else:
+                    print("Invalid choice. Please select 'a' or 'b'.")
+
+
+def get_multi_images() -> list:
+    """Prompts the user to input the path of a folder containing images to load and returns the loaded images.
+
+    Returns:
+        list: List of loaded images as numpy arrays.
+    """
+    while True:
+        folder_path = input(
+            "Input the folder path to load images(default - \"data/using\"): ").strip()
+
+        try:
+            images = load_images_from_folder(folder_path)
+            print("Images loaded successfully!")
+            return images
+        except ValueError as e:
+            print(f"Error: {e}")
+            print("  a. Retry with a new folder path")
+            print("  b. Exit the program")
+
+            while True:  # Invalid choice handling loop
+                user_choice = input(
+                    "Please select one of the following options (a / b): ").strip().lower()
+                if user_choice == "b":
+                    print("Exiting program...")
+                    return
+                elif user_choice == "a":
+                    print("Retrying...")
+                    break  # Exit the invalid choice loop and retry folder input
+                else:
+                    print("Invalid choice. Please select 'a' or 'b'.")
