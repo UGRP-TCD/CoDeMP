@@ -5,7 +5,7 @@ from yolo.yolo import get_mask_from_YOLO
 
 def run_by_option(option: int) -> None:
     # < Generate a description from a file (one by one) >
-    if option == 1:
+    if option == "1":
         print("=> You selected option 1.\n")
 
         """
@@ -32,4 +32,10 @@ def run_by_option(option: int) -> None:
 
 def do_yolo_and_superpixel(image: np.ndarray) -> dict:
     # Get the mask from YOLO
-    mask_dict = get_mask_from_YOLO(image)
+    yolo_model = "yolov8l-seg.pt"
+    mask_dict = get_mask_from_YOLO(image, yolo_model=yolo_model)
+
+    # Apply superpixel
+    # processed_img = do superpixel()
+
+    return processed_img

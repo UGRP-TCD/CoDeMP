@@ -88,8 +88,7 @@ def get_single_image() -> np.ndarray:
             print("Image loaded successfully!")
             return image
         except FileNotFoundError as e:
-            print(
-                f"Error: {e}")
+            print(f"Error: {e}")
             print("  a. Retry with a new file name")
             print("  b. Exit the program")
 
@@ -120,7 +119,7 @@ def get_multi_images() -> list:
             images = load_images_from_folder(folder_path)
             print("Images loaded successfully!")
             return images
-        except ValueError as e:
+        except FileNotFoundError as e:
             print(f"Error: {e}")
             print("  a. Retry with a new folder path")
             print("  b. Exit the program")

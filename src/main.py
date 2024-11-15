@@ -9,7 +9,7 @@ def main():
     # CLI guide & Show options
     option = guide(version)
     # Option 3: Exit the program
-    if option == 3:
+    if option == "3":
         print("=> You selected option 3. Exit the program.")
         return
 
