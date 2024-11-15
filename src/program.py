@@ -1,8 +1,10 @@
+import numpy as np
 from dataset import get_multi_images, get_single_image, normalize_image
+from yolo.yolo import get_mask_from_YOLO
 
 
 def run_by_option(option: int) -> None:
-    # Generate a description from a file (one by one)
+    # < Generate a description from a file (one by one) >
     if option == 1:
         print("=> You selected option 1.\n")
 
@@ -13,7 +15,7 @@ def run_by_option(option: int) -> None:
         image = get_single_image()
         # Normalize the image
         norm_image = normalize_image(image)
-    # Generate series of descriptions from a folder
+    # < Generate series of descriptions from a folder >
     else:
         print("=> You selected option 2.\n")
 
@@ -28,5 +30,6 @@ def run_by_option(option: int) -> None:
             norm_images.append(normalize_image(image))
 
 
-def do_yolo_and_superpixel(image):
-    pass
+def do_yolo_and_superpixel(image: np.ndarray) -> dict:
+    # Get the mask from YOLO
+    mask_dict = get_mask_from_YOLO(image)
