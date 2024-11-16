@@ -5,7 +5,7 @@ from google.colab import files
 
 # OpenAI API 키 설정
 client = OpenAI(
-    api_key='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'
+    api_key=''
 )
 
 # 이미지 업로드
