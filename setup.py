@@ -1,12 +1,14 @@
-from distutils.core import setup, Extension
-import numpy
+from setuptools import setup, Extension
 
-module = Extension('fslic',
-                   sources=['fslic_wrapper.c', 'fslic.c'],
-                   include_dirs=[numpy.get_include()],
-                   extra_compile_args=['-std=c99'])
+module = Extension(
+    "fslic",  # Python 모듈 이름
+    sources=["fslic.c"],  # 컴파일할 C 소스 파일
+    include_dirs=[],  # 필요한 헤더 파일 디렉토리
+)
 
-setup(name='fslic',
-      version='1.0',
-      description='FSLIC algorithm implementation',
-      ext_modules=[module])
+setup(
+    name="fslic",
+    version="1.0",
+    description="A Python wrapper for fslic C library",
+    ext_modules=[module],
+)
