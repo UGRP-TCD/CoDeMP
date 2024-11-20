@@ -1,8 +1,6 @@
 ## Setup 
 ```python 
-python setup.py install --user
-```
-## How to use 
-```python 
-python fslic.py
+python setup.py bdist_wheel
+
+pip install /path/to/fslic-1.0-<platform>.whl
 ```
