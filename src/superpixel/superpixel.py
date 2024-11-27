@@ -1,37 +1,50 @@
-
 import numpy as np
 import fslic
-from skimage import io, color
-from skimage.transform import resize
-import matplotlib.pyplot as plt
-from superpixel.shadow import remove_shadow
+from skimage import color
 
 
-img = io.imread('horses.jpg')
+def superpixel(img_resized: np.ndarray, mask_dict: dict) -> np.ndarray:
 
-# img = remove_shadow(img)
+    h, w, _ = img_resized.shape
+    result_img = np.zeros_like(img_resized)
 
-downscale_factor = 0.4
-img_resized = resize(img, (int(img.shape[0] * downscale_factor), int(
-    img.shape[1] * downscale_factor)), anti_aliasing=True)
+    for label, mask in mask_dict.items():
+
+        masked_img = img_resized * mask[:, :, np.newaxis]
+
+        img_lab = color.rgb2lab(masked_img)
+        h, w, d = img_lab.shape
+        img_flat = img_lab.reshape(-1).tolist()
+
+        clusters = 100
+        compactness = 100
+
+        result = np.array(fslic.fslic(img_flat, w, h, d,
+                          clusters, compactness, 10, 1, 1))
+        result = result.reshape(h, w, d)
+
+        result_rgb = color.lab2rgb(result)
+        result_img += result_rgb * mask[:, :, np.newaxis]
+
+    done_img = result_img.clip(0, 1)
+
+    return done_img
 
 
-img_lab = color.rgb2lab(img_resized)
-h, w, d = img_lab.shape
-img_flat = img_lab.reshape(-1).tolist()
+def superpixel_no_mask(img_resized: np.ndarray) -> np.ndarray:
 
-clusters = 100
-compactness = 100
-result = np.array(fslic.fslic(img_flat, w, h, d,
-                  clusters, compactness, 10, 1, 1))
-result = result.reshape(h, w, d)
+    img_lab = color.rgb2lab(img_resized)
+    h, w, d = img_lab.shape
+    img_flat = img_lab.reshape(-1).tolist()
 
+    clusters = 100
+    compactness = 100
 
-result_rgb = color.lab2rgb(result)
+    result = np.array(fslic.fslic(img_flat, w, h, d,
+                      clusters, compactness, 10, 1, 1))
+    result = result.reshape(h, w, d)
+    result_rgb = color.lab2rgb(result)
 
+    done_img = result_rgb.clip(0, 1)
 
-plt.imshow(result_rgb)
-plt.axis('off')
-plt.show()
-
-io.imsave('fslic_result.png', (result_rgb * 255).astype(np.uint8))
+    return done_img
