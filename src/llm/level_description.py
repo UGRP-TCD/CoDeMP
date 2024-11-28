@@ -84,12 +84,12 @@ class description_with_gpt:
 
 if __name__ == "__main__":
     # Load images and convert to numpy arrays
-    img1 = Image.open('1.jpg')
-    img2 = Image.open('2.jpg')
-    img_arrays = np.array([np.array(img1), np.array(img2)])
+    # img1 = Image.open('1.jpg')
+    # img2 = Image.open('2.jpg')
+    img_arrays = np.array([np.array(orig_image), np.array(sup_iamge)])
     
-    level = 3
+    level = level_option
     yaml_path = 'description_guide.yaml'
 
-    pc1 = description_with_gpt(yaml_path)
+    pc1 = description_with_gpt()
     result = pc1.processing_image_with_level(img_arrays, level)

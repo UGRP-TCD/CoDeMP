@@ -14,11 +14,9 @@ level_1:
         The red Shiba Inu has deep and vivid fur color.
         The black Shiba Inu has glossy and dense fur.
         The tricolor Shiba Inu has white, red, and black fur harmoniously mixed.
-    input_format:
-      - "Original image in numpy format"
-    Output_Format:
-      - "1. Overall description of the input image"
-      - "2. Color description for each object (describe all objects without classifying by color), output 1 and 2 separated by line break"
+    input_format: ["Original image in numpy format"]
+    Output_Format: ["1. Overall description of the input image 2. Color description for each object (describe all objects without classifying by color), output 1 and 2 separated by line break"]
+
 level_2:
   Description_Prompt_Guide:
     instruction:
@@ -36,11 +34,9 @@ level_2:
         The red Shiba Inu with fur color reminiscent of a flame of passion shows a passionate appearance.
         The black Shiba Inu, reminiscent of a mysterious night sky, exudes a bewitching charm.
         The tricolor Shiba Inu with white, red, and black fur harmoniously blended boasts a brilliant and unique beauty.
-    input_format:
-      - "Original image in numpy format and Superpixel-processed image"
-    Output_Format:
-      - "1. Overall description of the input image"
-      - "2. Color description for each object (describe all objects without classifying by color), output 1 and 2 separated by line break"
+    input_format: ["Original image in numpy format and Superpixel-processed image"]
+    Output_Format: ["1. Overall description of the input image 2. Color description for each object (describe all objects without classifying by color), output 1 and 2 separated by line break"]
+
 level_3:
   Description_Prompt_Guide:
     instruction:
@@ -57,8 +53,25 @@ level_3:
         The passionate red fur erupts with the energy of a flame of passion, like the sunset of a hot summer day.
         The mysterious black fur holds a deep and eternal mystery, like the quietude of a deep night, a veil enveloping an unknown world.
         The harmonious blend of three colors reflects the principles of the universe, performing a symphonic harmony created by different colors.
-    input_format:
-      - "Original image in numpy format and complex image analysis results"
-    Output_Format:
-      - "1. In-depth interpretation of the input image"
-      - "2. Literary and emotional depth description of colors for each object, output 1 and 2 separated by line break"
+    input_format: ["Original image in numpy format and complex image analysis results"]
+    Output_Format: ["1. In-depth interpretation of the input image 2. Literary and emotional depth description of colors for each object, output 1 and 2 separated by line break"]
+
+level_4:
+  Description_Prompt_Guide:
+    instruction:
+      description: "Guidelines for describing the image's colors and atmosphere at each stage."
+      Level: "Level 4: Advanced Literary and Emotional Expression"
+      Goal: "Provide a profound and artistic interpretation of the image's colors and atmosphere, using advanced literary techniques."
+      Criteria:
+        - "Advanced literary techniques in color description"
+        - "Deep emotional and atmospheric conveyance"
+        - "Artistic and poetic expressions"
+      Prompt: "Provide a profound and artistic interpretation of the image's colors and atmosphere."
+      Example_Output: |
+        Like colors on an artist's palette, the Shiba Inus evoke admiration from viewers.
+        The white Shiba Inu with fur shining brilliantly is as elegant as the queen of the Winter Kingdom.
+        The red Shiba Inu with fur color reminiscent of a flame of passion shows a passionate appearance.
+        The black Shiba Inu, reminiscent of a mysterious night sky, exudes a bewitching charm.
+        The tricolor Shiba Inu with white, red, and black fur harmoniously blended boasts a brilliant and unique beauty.
+    input_format: ["Original image in numpy format and Superpixel-processed image"]
+    Output_Format: ["1. Overall description of the input image 2. Color description for each object (describe all objects without classifying by color), output 1 and 2 separated by line break"]
