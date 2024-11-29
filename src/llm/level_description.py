@@ -8,7 +8,7 @@ from openai import OpenAI
 
 class DescriptionWithGPT:
     def __init__(self, yaml_path, orig_image, sup_image=None):
-        self.client = OpenAI(api_key='')  # API 키 입력
+        self.client = OpenAI(api_key='a')  # API 키 입력
         self.description_guide = self.load_yaml(yaml_path)
         self._orig_image = orig_image  # 원본 이미지
         self._sup_image = sup_image  # 보조 이미지
