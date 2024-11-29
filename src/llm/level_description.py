@@ -5,10 +5,13 @@ from PIL import Image
 import io
 from openai import OpenAI
 
-class description_with_gpt:
-    def __init__(self, yaml_path):
+
+class DescriptionWithGPT:
+    def __init__(self, yaml_path, orig_image, sup_image=None):
         self.client = OpenAI(api_key='')  # API 키 입력
         self.description_guide = self.load_yaml(yaml_path)
+        self._orig_image = orig_image  # 원본 이미지
+        self._sup_image = sup_image  # 보조 이미지
     
     def load_yaml(self, yaml_path):
         """Load YAML configuration file."""
@@ -19,10 +22,17 @@ class description_with_gpt:
         """Retrieve the description guide for a specific level."""
         return self.description_guide.get(f"level_{level}")
     
-    def processing_image_with_level(self, img_arrays, level):
-        if isinstance(img_arrays, np.ndarray):
-            img_arrays = [img_arrays[i] for i in range(img_arrays.shape[0])]
-        
+    def processing_image_with_level(self, level):
+        # Determine images to process based on level
+        if level in [1, 3]:
+            img_arrays = [self._orig_image]
+        elif level in [2, 4]:
+            if self._sup_image is None:
+                raise ValueError("Supplementary image is required for levels 2 and 4.")
+            img_arrays = [self._orig_image, self._sup_image]
+        else:
+            raise ValueError(f"Invalid level: {level}")
+
         # Prepare base64 encoded images
         base64_images = []
         for img in img_arrays:
@@ -33,7 +43,6 @@ class description_with_gpt:
 
         # Get guide for the selected level
         guide = self.get_description_guide(level)
-        
         if not guide:
             raise ValueError(f"No description guide found for level {level}")
 
@@ -83,13 +92,12 @@ class description_with_gpt:
 
 
 if __name__ == "__main__":
-    # Load images and convert to numpy arrays
-    # img1 = Image.open('1.jpg')
-    # img2 = Image.open('2.jpg')
-    img_arrays = np.array([np.array(orig_image), np.array(sup_iamge)])
-    
-    level = level_option
+    # Load images as numpy arrays
+    orig_image = np.array(Image.open('1.jpg'))
+    sup_image = np.array(Image.open('2.jpg'))  # Optional
+
+    level = 2  # Example level
     yaml_path = 'description_guide.yaml'
 
-    pc1 = description_with_gpt()
-    result = pc1.processing_image_with_level(img_arrays, level)
+    pc1 = DescriptionWithGPT(yaml_path, orig_image, sup_image)
+    result = pc1.processing_image_with_level(level)
