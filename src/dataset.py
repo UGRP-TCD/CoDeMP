@@ -81,10 +81,10 @@ def get_single_image() -> np.ndarray:
         np.ndarray: The loaded image as a numpy array.
     """
     while True:
-        file_name = input("Input the file name (<fileName>.<format>): ")
+        file_name = input("Input the file name: ")
 
         try:
-            image = load_single_image("data/using/" + file_name)
+            image = load_single_image(file_name)
             print("Image loaded successfully!")
             return image
         except FileNotFoundError as e:
@@ -113,7 +113,7 @@ def get_multi_images() -> list:
     """
     while True:
         folder_path = input(
-            "Input the folder path to load images(default - \"data/using\"): ").strip()
+            "Input the folder path to load images: ").strip()
 
         try:
             images = load_images_from_folder(folder_path)
