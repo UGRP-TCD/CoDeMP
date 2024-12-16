@@ -8,7 +8,7 @@ from openai import OpenAI
 
 class DescriptionWithGPT:
     def __init__(self, yaml_path, orig_image, sup_image=None):
-        self.client = OpenAI(api_key='a')  # API 키 입력
+        self.client = OpenAI(api_key='api_key')  # API 키 입력
         self.description_guide = self.load_yaml(yaml_path)
         self._orig_image = orig_image  # 원본 이미지
         self._sup_image = sup_image  # 보조 이미지
@@ -87,13 +87,19 @@ class DescriptionWithGPT:
             messages=messages,
             max_tokens=1000
         )
+        
+        save_sup_image = self._sup_image
+        save_sup_image[:, :, [0, 2]] = save_sup_image[:, :, [2, 0]]
+        save_sup_image = Image.fromarray(save_sup_image)
+        save_sup_image.save(f'C:/UGRP/CoDeMP-simple/results/{name}.jpg', 'JPEG')
 
         # Save the generated description to a .txt file
-        output_filename = f"/results/{name}_{level}_{iter_num}.txt"
+        #output_filename = f"C:/UGRP/CoDeMP-simple/results/{name[-16:-1]}_{level}_{iter_num}.txt"
+        output_filename = f"C:/UGRP/CoDeMP-simple/results/{name}_{level}_{iter_num}.txt"
         with open(output_filename, "w", encoding="utf-8") as file:
             file.write(response.choices[0].message.content)
 
-        print(f"\nGenerated description saved to {output_filename}")
+        print(f"/nGenerated description saved to {output_filename}")
 
 
 # if __name__ == "__main__":

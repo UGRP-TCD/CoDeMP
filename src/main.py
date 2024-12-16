@@ -10,7 +10,7 @@ def process_single_image(iter_num: int, file_path: str) -> None:
 
     processed_image = get_yolo_superpixel(norm_image, mask_true=1)
 
-    prompt = "llm/description_guide.yaml"
+    prompt = "/llm/description_guide.yaml"
     prompt_object = DescriptionWithGPT(prompt, norm_image, processed_image)
 
     name = file_path.replace("/dataset/", "").replace(".jpg", "")
@@ -29,7 +29,7 @@ def process_multi_images(iter_num: int, folder_path: str) -> None:
     for norm_image in norm_images:
         processed_images.append(get_yolo_superpixel(norm_image, mask_true=1))
 
-    prompt = "llm/description_guide.yaml"
+    prompt = "/llm/description_guide.yaml"
 
     for i in range(1, 101):
         prompt_object = DescriptionWithGPT(
@@ -41,8 +41,8 @@ def process_multi_images(iter_num: int, folder_path: str) -> None:
 
 def main():
     # 필요한 거 주석 해제해서 사용할 것
-    process_single_image(iter_num=20, file_path="/dataset/.jpg")
-    # process_multi_images(iter_num=20, folder_path="/dataset")
+    #process_single_image(iter_num=20, file_path="/dataset/001.jpg")
+    process_multi_images(iter_num=20, folder_path="/dataset")
 
 
 if __name__ == '__main__':

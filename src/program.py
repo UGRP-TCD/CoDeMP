@@ -1,10 +1,10 @@
 from multiprocessing import process
 import numpy as np
 from dataset import get_multi_images, get_single_image, normalize_image
-from llm.level_description import description_with_gpt
-from superpixel import superpixel as sp
+from llm.level_description import DescriptionWithGPT
+from matlab_python import superpixel
 from yolo.yolo import get_mask_from_YOLO
-
+from PIL import Image
 
 def run_by_option(option: int) -> None:
     # < Generate a description from a file (one by one) >
@@ -62,9 +62,11 @@ def get_yolo_superpixel(image: np.ndarray, mask_true: bool = 1) -> np.ndarray:
         yolo_model = "yolov8l-seg.pt"
         mask_dict = get_mask_from_YOLO(image, yolo_model=yolo_model)
 
-        processed_img = sp.superpixel(image, mask_dict)
+        # mask_dict 입력을 어떻게 받아야 될까요...
+        #processed_img = superpixel(image, mask_dict)
+        processed_img = superpixel(image)
     else:
-        processed_img = sp.superpixel_no_mask(image)
+        processed_img = superpixel_no_mask(image)
 
     return processed_img
 
@@ -76,13 +78,13 @@ def get_description(orig_image: np.ndarray, sup_image: np.ndarray, level_option:
 
     # Get the description one by one
     if level_option in levels:
-        description = description_with_gpt(
+        description = DescriptionWithGPT(
             orig_image, sup_image).processing_image_with_level(level_option)
         return description
 
     # Get the description for all levels
     if level_option == all:
-        desc_obj = description_with_gpt(orig_image, sup_image)
+        desc_obj = DescriptionWithGPT(orig_image, sup_image)
         descriptions = [desc_obj.processing_image_with_level(
             level) for level in levels]
         return descriptions
